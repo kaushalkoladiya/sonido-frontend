@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 const Navbar = () => {
   return (
     <AppBar position="fixed">
-      <Toolbar>
+      <Toolbar style={{margin:"auto"}}>
         <Button color="inherit" component={NavLink} to="/login" >Login</Button>
         <Button color="inherit" component={NavLink} to="/" >Home</Button>
         <Button color="inherit" component={NavLink} to="/signup" >Signup</Button>

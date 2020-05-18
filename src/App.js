@@ -33,15 +33,43 @@ const theme = createMuiTheme({
   },
 });
 
-axios.defaults.headers = {
-  'Content-Type': 'application/json'
-};
+axios.defaults.headers['Content-Type'] = 'application/json';
 
 class App extends Component {
 
   state = {
     isAuth: false,
   }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+
+    if (!token || !expiryDate) return
+
+    if (new Date(expiryDate) <= new Date()) {
+      this.logoutHandler();
+      return;
+    }
+
+    const remainSecond = new Date().getTime(expiryDate) - new Date();
+    this.setAutoLogout(remainSecond);
+    axios.defaults.headers['Authorization'] = `Bearer ${token}`
+    this.setState({ isAuth: true });
+  }
+
+  logoutHandler = () => {
+    this.setState({ isAuth: false });
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiryDate');
+    delete axios.defaults.headers["Authorization"];
+  }
+
+  setAutoLogout = milliseconds => {
+    setTimeout(() => {
+      this.logoutHandler();
+    }, milliseconds);
+  };
 
   render() {
 

@@ -54,6 +54,9 @@ const Signup = ({ classes, ...rest }) => {
         setErrors({ ...data.errors });
       }
     } else {
+      const remainSecond = 60 * 60 * 1000;
+      const expiryDate = new Date(new Date().getTime() + remainSecond);
+      localStorage.setItem('expiryDate', expiryDate);
       localStorage.setItem('token', `Bearer ${data.token}`);
       rest.history.push('/');
     }
