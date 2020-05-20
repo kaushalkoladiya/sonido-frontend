@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 // MUI
 import withStyle from '@material-ui/core/styles/withStyles';
@@ -60,41 +60,77 @@ const Track = ({ classes, track, fromHome }) => {
   }
 
   return (
-    <Grid item xl={3} lg={4} sm={6} xs={12}>
-      <Card className={classes.root}>
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              {trackName}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {artistName}
-            </Typography>
-          </CardContent>
-          <div className={classes.controls}>
-            {fromHome &&
-              <DedicateDialog
-                track={track}
+    <Fragment>
+      {fromHome ? (
+
+        <Grid item xl={3} lg={4} sm={6} xs={12}>
+          <Card className={classes.root}>
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  {trackName}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {artistName}
+                </Typography>
+              </CardContent>
+              <div className={classes.controls}>
+                {fromHome &&
+                  <DedicateDialog
+                    track={track}
+                  />
+                }
+                {play ? (
+                  <TooltipButton onClick={pauseHandler} title="Pause" placement="top">
+                    <PauseArrowIcon className={classes.playIcon} color="primary" />
+                  </TooltipButton>
+                ) : (
+                    <TooltipButton onClick={playHandler} title="Play" placement="top">
+                      <PlayArrowIcon className={classes.playIcon} color="primary" />
+                    </TooltipButton>
+                  )}
+              </div>
+            </div>
+            <CardMedia
+              className={classes.cover}
+              image={artworkUrl100}
+              title={artistName}
+            />
+          </Card>
+        </Grid>
+      ) : (
+          <Grid item sm={12}>
+            <Card className={classes.root}>
+              <div className={classes.details}>
+                <CardContent className={classes.content}>
+                  <Typography variant="h5">
+                    {trackName}
+                  </Typography>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {artistName}
+                  </Typography>
+                </CardContent>
+                <div className={classes.controls}>
+                  {play ? (
+                    <TooltipButton onClick={pauseHandler} title="Pause" placement="top">
+                      <PauseArrowIcon className={classes.playIcon} color="primary" />
+                    </TooltipButton>
+                  ) : (
+                      <TooltipButton onClick={playHandler} title="Play" placement="top">
+                        <PlayArrowIcon className={classes.playIcon} color="primary" />
+                      </TooltipButton>
+                    )}
+                </div>
+              </div>
+              <CardMedia
+                className={classes.cover}
+                image={artworkUrl100}
+                title={artistName}
               />
-              }
-            {play ? (
-              <TooltipButton onClick={pauseHandler} title="Pause" placement="top">
-                <PauseArrowIcon className={classes.playIcon} color="primary" />
-              </TooltipButton>
-            ) : (
-                <TooltipButton onClick={playHandler} title="Play" placement="top">
-                  <PlayArrowIcon className={classes.playIcon} color="primary" />
-                </TooltipButton>
-              )}
-          </div>
-        </div>
-        <CardMedia
-          className={classes.cover}
-          image={artworkUrl100}
-          title={artistName}
-        />
-      </Card>
-    </Grid>
+            </Card>
+          </Grid>
+        )}
+    </Fragment>
   )
 }
 

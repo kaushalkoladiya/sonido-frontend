@@ -9,11 +9,12 @@ import Paper from '@material-ui/core/Paper';
 // Components
 import Navbar from '../components/Navbar/Navbar';
 import SearchBox from '../components/SearchBox/SearchBox';
-import Dedicate from '../components/Dedicate/Dedicate';
 
 // Containers
 import UserThumbnailContainer from '../container/UserThumbnail';
 import Tracks from '../container/Tracks';
+import SendedDedications from '../container/SendedDedications';
+import ReceivedDedications from '../container/ReceivedDedications';
 
 // API
 import { getTracks, home } from '../api';
@@ -81,7 +82,6 @@ class Home extends Component {
   }
 
   render() {
-
     return (
       <Fragment>
         <Navbar
@@ -104,14 +104,32 @@ class Home extends Component {
                     tracks={this.state.tracks}
                     fromHome
                   />
-                  <Paper style={{ padding: 10 }}>
+                  <Paper style={{ padding: 10, marginBottom: 20 }}>
+                    <Typography variant="h5" color="primary">Your Dedications details</Typography>
+                    <br />
+                    <Grid container spacing={2}>
+                      <Grid item sm={6} xs={12}>
+                        <SendedDedications
+                          sendedDedications={this.state.sendedDedications}
+                          noSendedDedications={this.state.noSendedDedications}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <ReceivedDedications
+                          receivedDedications={this.state.receivedDedications}
+                          noReceivedDedications={this.state.noReceivedDedications}
+                        />
+                      </Grid>
+                    </Grid>
+
+                  </Paper>
+                  <Paper style={{ padding: 10, marginBottom: 20 }}>
                     <Typography variant="h6" color="primary">Recently joined users</Typography>
                     <UserThumbnailContainer
                       users={this.state.users}
                       noUsers={this.state.noUsers}
                     />
                   </Paper>
-                  <Dedicate />
                 </Fragment>
               )
           ) : (

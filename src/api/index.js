@@ -64,7 +64,8 @@ export const home = async () => {
             _id,
             sender{
               _id,
-              username
+              username,
+              name
             },
             receiver,
             previewUrl,
@@ -77,7 +78,8 @@ export const home = async () => {
             _id,
             receiver{
               _id,
-              username
+              username,
+              name
             }
             sender,
             previewUrl,

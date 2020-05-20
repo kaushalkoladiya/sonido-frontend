@@ -5,8 +5,6 @@ import axios from 'axios';
 // MUI
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-
-
 // Pages
 import LoginPage from './pages/login';
 import SignupPage from './pages/signup';
