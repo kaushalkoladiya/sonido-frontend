@@ -7,11 +7,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
 // Icons
-import NotificationIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 
 // Components
 import TooltipButton from '../Button/TooltipButton';
+import Notifications from '../Dialog/Notification';
 
 const Navbar = ({ isAuth, notifications }) => {
   return (
@@ -24,11 +24,7 @@ const Navbar = ({ isAuth, notifications }) => {
                 <HomeIcon />
               </TooltipButton>
             </Link>
-            <Link to="/notification">
-              <TooltipButton title="Notification">
-                <NotificationIcon />
-              </TooltipButton>
-            </Link>
+            <Notifications notifications={notifications} />
           </Fragment>
         ) : (
             <Fragment>

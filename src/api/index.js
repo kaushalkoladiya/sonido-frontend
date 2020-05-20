@@ -89,13 +89,18 @@ export const home = async () => {
             createdAt
           },
           notifications{
-            sender,
+            sender{
+              _id,
+              name,
+              username
+            },
             receiver,
             type,
             dedicateId{
               _id,
               previewUrl,
-              trackName
+              trackName,
+              artistName
             },
             createdAt
           }
@@ -103,7 +108,7 @@ export const home = async () => {
       }
     `
     }
-    const { data: { data: home } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    const { data: { data: home } } = await axios.post('http://localhost:5000/graphql', JSON.stringify(graphqlQuery));
     return home;
   } catch ({ response }) {
     console.log(response)
