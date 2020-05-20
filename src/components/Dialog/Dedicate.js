@@ -7,8 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 // Icons
 import LooksIcon from '@material-ui/icons/Looks';
@@ -89,7 +88,7 @@ const Dedicate = ({ classes, track }) => {
               />
             </Grid>
           </Grid>
-          {loading && <CircularProgress variant="query" style={{ position: 'inherit' }} color="secondary" />}
+          {loading && <LinearProgress variant="query" style={{ position: 'inherit' }} color="secondary" />}
           <UserThumbnailContainer
             users={users}
             noUsers={noUsers}

@@ -11,19 +11,21 @@ const UserThumbnail = ({ users, noUsers, fromSearch, dedicateHandler }) => {
   const hasUsers = users.length > 0 ? true : false;
   return (
     <Grid container>
-      {noUsers ? (
-        <Fragment><Typography>Nothing there!</Typography></Fragment>
+      {hasUsers ? (
+        <Fragment>
+          {users.map((user, key) =>
+            <Thumbnail
+              user={user}
+              key={key}
+              fromSearch={fromSearch ? true : false}
+              dedicateHandler={dedicateHandler ? dedicateHandler : null}
+            />)}
+        </Fragment>
+      ) : noUsers ? (
+        <Typography>Not found</Typography>
       ) : (
-          <Fragment>
-            {users.map((user, key) =>
-              <Thumbnail
-                user={user}
-                key={key}
-                fromSearch={fromSearch ? true : false}
-                dedicateHandler={dedicateHandler ? dedicateHandler : null}
-              />)}
-          </Fragment>
-        )}
+            <Fragment><Typography>Nothing there!</Typography></Fragment>
+          )}
     </Grid>
   )
 }

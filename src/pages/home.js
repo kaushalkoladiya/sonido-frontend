@@ -105,7 +105,7 @@ class Home extends Component {
                     fromHome
                   />
                   <Paper style={{ padding: 10, marginBottom: 20 }}>
-                    <Typography variant="h5" color="primary">Your Dedications details</Typography>
+                    <Typography variant="h4" style={{ textAlign: 'center' }} color="primary">Your Dedications details</Typography>
                     <br />
                     <Grid container spacing={2}>
                       <Grid item sm={6} xs={12}>
