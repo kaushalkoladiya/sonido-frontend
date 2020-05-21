@@ -173,3 +173,53 @@ export const dedicateSong = async (receiverId, previewUrl, artworkUrl100, trackN
   }
 }
 
+export const editUser = async (name, location, bio, website) => {
+  try {
+    const graphqlQuery = {
+      query: `
+        mutation {
+          editUser(editUserData: {
+            name: "${name}",
+            bio: "${bio}",
+            website: "${website}",
+            location: "${location}",
+          }) {
+            name, 
+            username
+          }
+        }  
+      `
+    };
+    const { data } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    console.log(data)
+    return;
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+
+export const showUser = async (_id) => {
+  try {
+    const graphqlQuery = {
+      query: `
+        {
+          showUser(_id:"${_id}") {
+            _id,
+            name,
+            username,
+            bio,
+            website, 
+            location, 
+            createdAt, 
+            email
+          }
+        }      
+      `
+    };
+    const { data: { data: { showUser } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    return showUser;
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+

@@ -50,6 +50,7 @@ const Login = ({ classes, ...rest }) => {
       const remainSecond = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainSecond);
       localStorage.setItem('expiryDate', expiryDate);
+      localStorage.setItem('userId', data.userId);
       localStorage.setItem('token', `Bearer ${data.token}`);
       rest.history.push('/');
     }

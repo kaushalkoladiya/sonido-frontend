@@ -51,7 +51,13 @@ const Notification = ({ classes, notifications }) => {
         <DialogTitle className={classes.center}><Typography variant="h5">Notifications!</Typography></DialogTitle>
         <DialogContent>
           <Grid container spacing={3}>
-            {notifications.map(({ sender, createdAt, dedicateId: { artistName, previewUrl, trackName }, type }, key) => {
+            {notifications.map(({ sender, createdAt, dedicateId, type }, key) => {
+              let artistName, previewUrl, trackName;
+              if (dedicateId) {
+                artistName = dedicateId.artistName;
+                previewUrl = dedicateId.previewUrl;
+                trackName = dedicateId.trackName
+              }
               const typeText = type === "dedicate" ? "Dedicate a song to you." : "Started following you.";
 
               return (

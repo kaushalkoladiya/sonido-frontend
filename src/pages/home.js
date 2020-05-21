@@ -67,6 +67,7 @@ class Home extends Component {
   logoutHandler = () => {
     this.setState({ isAuth: false });
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     localStorage.removeItem('expiryDate');
     delete axios.defaults.headers["Authorization"];
   }
