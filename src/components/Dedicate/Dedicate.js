@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 // MUI
@@ -7,8 +6,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+
+import User from '../Dialog/User';
 
 // Components
 import Track from '../Track/Track';
@@ -43,7 +43,8 @@ const DedicationThumbnail = ({ classes, data: { previewUrl, artworkUrl, createdA
       <CardHeader
         avatar={<Avatar>{username.substr(0, 1)}</Avatar>}
         title={
-          <Typography color="primary" component={Link} to={`/${_id}`}>{username}</Typography>
+          <User username={username} id={_id} fromDedication />
+          // <Typography color="primary" component={Link} to={`/${_id}`}>{username}</Typography>
         }
         subheader={<Moment format="MMM DD, YYYY" date={createdAt} />}
       />

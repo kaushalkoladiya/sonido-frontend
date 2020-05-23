@@ -33,7 +33,6 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 
 class App extends Component {
   render() {
-
     let route = (
       <Switch>
         <Route
@@ -54,25 +53,16 @@ class App extends Component {
             />
           }
         />
-         <Route
-            path="/"
-            exact
-            component={props =>
-              <HomePage
-                {...props}
-              />}
-          />
+        <Route
+          path="/"
+          exact
+          component={props =>
+            <HomePage
+              {...props}
+            />}
+        />
       </Switch>
     );
-
-    // if (this.state.isAuth) {
-    //   route = (
-    //     <Switch>
-         
-    //     </Switch>
-    //   )
-    // }
-
     return (
       <MuiThemeProvider theme={theme}>
         <BrowserRouter>

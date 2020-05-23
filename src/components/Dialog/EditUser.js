@@ -41,7 +41,11 @@ const EditUser = ({ classes, track }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { name, bio, website, location } = await showUser(localStorage.getItem('userId'));
+      const userData = await showUser(localStorage.getItem('userId'));
+      if(userData.status) {
+        setErrors('Serve problem try again later');
+      }
+      const { name, bio, website, location } = userData;
       setName(name);
       setBio(bio);
       setWebsite(website);

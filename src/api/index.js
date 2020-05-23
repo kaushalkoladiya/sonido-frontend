@@ -204,6 +204,7 @@ export const showUser = async (_id) => {
       query: `
         {
           showUser(_id:"${_id}") {
+          user {
             _id,
             name,
             username,
@@ -212,14 +213,48 @@ export const showUser = async (_id) => {
             location, 
             createdAt, 
             email
+          },
+          follow
           }
         }      
       `
     };
-    const { data: { data: { showUser } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    const { data: { data: { showUser } } } = await axios.post("http://localhost:5000/graphql", JSON.stringify(graphqlQuery));
     return showUser;
+  } catch ({ response }) {
+    console.log(response);
+    return { ...response.data.errors[0] }
+  }
+}
+
+export const follow = async (_id) => {
+  try {
+    const graphqlQuery = {
+      query: `
+        mutation {
+          follow(followunfollowData:{_id: "${_id}"})
+        }        
+      `
+    }
+    const data = await axios.post(URL, JSON.stringify(graphqlQuery));
+    console.log(data);
   } catch (error) {
     console.log(error.response);
   }
 }
 
+export const unfollow = async (_id) => {
+  try {
+    const graphqlQuery = {
+      query: `
+        mutation {
+          unfollow(followunfollowData:{_id: "${_id}"})
+        }        
+      `
+    }
+    const data = await axios.post(URL, JSON.stringify(graphqlQuery));
+    console.log(data);
+  } catch (error) {
+    console.log(error.response);
+  }
+}

@@ -38,8 +38,9 @@ class Home extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
+    const userId = localStorage.getItem('userId');
 
-    if (!token || !expiryDate) return;
+    if (!token || !expiryDate || !userId) return;
 
     if (new Date(expiryDate) <= new Date()) {
       this.logoutHandler();
