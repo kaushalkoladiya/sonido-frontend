@@ -108,7 +108,7 @@ export const home = async () => {
       }
     `
     }
-    const { data: { data: home } } = await axios.post('http://localhost:5000/graphql', JSON.stringify(graphqlQuery));
+    const { data: { data: home } } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return home;
   } catch ({ response }) {
     console.log(response)
@@ -165,8 +165,7 @@ export const dedicateSong = async (receiverId, previewUrl, artworkUrl100, trackN
         }  
       `
     };
-    const { data } = await axios.post(URL, JSON.stringify(graphqlQuery));
-    console.log(data);
+    await axios.post(URL, JSON.stringify(graphqlQuery));
     return;
   } catch (error) {
     console.log(error.response);
@@ -190,8 +189,7 @@ export const editUser = async (name, location, bio, website) => {
         }  
       `
     };
-    const { data } = await axios.post(URL, JSON.stringify(graphqlQuery));
-    console.log(data)
+    await axios.post(URL, JSON.stringify(graphqlQuery));
     return;
   } catch (error) {
     console.log(error.response);
@@ -219,7 +217,7 @@ export const showUser = async (_id) => {
         }      
       `
     };
-    const { data: { data: { showUser } } } = await axios.post("http://localhost:5000/graphql", JSON.stringify(graphqlQuery));
+    const { data: { data: { showUser } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return showUser;
   } catch ({ response }) {
     console.log(response);
@@ -236,8 +234,8 @@ export const follow = async (_id) => {
         }        
       `
     }
-    const data = await axios.post(URL, JSON.stringify(graphqlQuery));
-    console.log(data);
+    await axios.post(URL, JSON.stringify(graphqlQuery));
+
   } catch (error) {
     console.log(error.response);
   }
@@ -252,8 +250,56 @@ export const unfollow = async (_id) => {
         }        
       `
     }
-    const data = await axios.post(URL, JSON.stringify(graphqlQuery));
-    console.log(data);
+    await axios.post(URL, JSON.stringify(graphqlQuery));
+
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+
+export const follower = async () => {
+  try {
+    const graphqlQuery = {
+      query: `
+        {
+          followers{
+            _id,
+            to,
+            from{
+              _id,
+              name,
+              username
+            }
+          }
+        }              
+      `
+    }
+    const { data: { data: { followers } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    return followers;
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+
+export const following = async () => {
+  try {
+    const graphqlQuery = {
+      query: `
+        {
+          following{
+            _id,
+            from,
+            to{
+              _id,
+              email,
+              username
+            }
+          }
+        }
+      `
+    }
+    const { data: { data: { following } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    return following;
   } catch (error) {
     console.log(error.response);
   }

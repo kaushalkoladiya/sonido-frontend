@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 
 // Icons
 import AccountIcon from '@material-ui/icons/AccountCircle';
@@ -19,6 +18,8 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 // Components
 import TooltipButton from '../Button/TooltipButton';
+import Follower from './Follower';
+import Following from './Following';
 
 import { showUser } from '../../api';
 
@@ -99,8 +100,8 @@ const Profile = ({ classes, track }) => {
             </Fragment>
           ) : (
                 <Fragment>
-                  <Button variant="text" color="primary">Follower</Button>
-                  <Button variant="text" color="secondary">Following</Button>
+                  <Follower />
+                 <Following />
                   {/* </div> */}
                   {name && <Typography variant="h6">{name}</Typography>}
                   {bio && <div>

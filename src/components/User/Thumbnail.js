@@ -19,7 +19,7 @@ const style = {
   }
 }
 
-const Thumbnail = ({ classes, user: { _id, username, name }, fromSearch, dedicateHandler }) => {
+const Thumbnail = ({ classes, user: { _id, username, name }, fromSearch, fromFollow, dedicateHandler }) => {
   return (
     <Fragment>
       {fromSearch ? (
@@ -40,20 +40,33 @@ const Thumbnail = ({ classes, user: { _id, username, name }, fromSearch, dedicat
             </Grid>
           </Grid>
         </Grid>
-      ) : (
-          <Grid item sm={3} xs={6} className={classes.thumbnail} >
-            <Grid container spacing={2}>
-              <Grid item>
-                <Avatar>{username.substr(0, 1)}</Avatar>
-              </Grid>
-              <Grid item>
-                <User username={username} id={_id} />
-                <br />
-                {name && <Typography variant="caption">{name}</Typography>}
-              </Grid>
+      ) : fromFollow ? (
+        <Grid item lg={12} sm={12} xs={12} className={classes.thumbnail} >
+          <Grid container spacing={2}>
+            <Grid item>
+              <Avatar>{username.substr(0, 1)}</Avatar>
+            </Grid>
+            <Grid item>
+              <User username={username} id={_id} />
+              <br />
+              {name && <Typography variant="caption">{name}</Typography>}
             </Grid>
           </Grid>
-        )}
+        </Grid>
+      ) : (
+            <Grid item sm={3} xs={6} className={classes.thumbnail} >
+              <Grid container spacing={2}>
+                <Grid item>
+                  <Avatar>{username.substr(0, 1)}</Avatar>
+                </Grid>
+                <Grid item>
+                  <User username={username} id={_id} />
+                  <br />
+                  {name && <Typography variant="caption">{name}</Typography>}
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
     </Fragment >
   )
 }
