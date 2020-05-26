@@ -5,10 +5,12 @@ import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Components
 import Navbar from '../components/Navbar/Navbar';
 import SearchBox from '../components/SearchBox/SearchBox';
+import Welcome from '../components/Welcome/Welcome';
 
 // Containers
 import UserThumbnailContainer from '../container/UserThumbnail';
@@ -89,11 +91,14 @@ class Home extends Component {
         <Navbar
           isAuth={this.state.isAuth}
           notifications={this.state.notifications}
+          logout={this.logoutHandler}
         />
         {
           this.state.isAuth ? (
             this.state.loading ? (
-              <h1>sackleton</h1>
+              <div style={{ margin: '50px auto 50px auto', textAlign: 'center' }}>
+                <CircularProgress value={30} variant="indeterminate" color="secondary" />
+              </div>
             ) : (
                 <Fragment>
                   <Paper style={{ padding: 5, marginBottom: 20 }}>
@@ -135,11 +140,7 @@ class Home extends Component {
                 </Fragment>
               )
           ) : (
-              <Grid container spacing={5}>
-                <Grid item>
-                  <Typography>Feel music!</Typography>
-                </Grid>
-              </Grid>
+              <Welcome />
             )
         }
       </Fragment>

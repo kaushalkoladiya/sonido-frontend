@@ -1,52 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // MUI
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
+
+// Icons
+import HomeIcon from "@material-ui/icons/AssignmentReturn";
 
 // API
-import { singup } from '../api';
+import { singup } from "../api";
 
-import Logo from '../images/logo.png'
-
+import Logo from "../images/logo.png";
+import TooltipButton from "../components/Button/TooltipButton";
 
 const style = {
   center: {
-    textAlign: 'center',
-    width: '100%',
-    padding: '0 20px',
+    textAlign: "center",
+    width: "100%",
+    padding: "0 20px",
   },
-
 };
 
 const Signup = ({ classes, ...rest }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const changeHandler = (event) => {
-    if (event.target.name === 'email') {
+    if (event.target.name === "email") {
       setEmail(event.target.value);
-    } else if (event.target.name === 'username') {
+    } else if (event.target.name === "username") {
       setUsername(event.target.value);
-    } else if (event.target.name === 'confirmPassword') {
+    } else if (event.target.name === "confirmPassword") {
       setConfirmPassword(event.target.value);
-    } else if (event.target.name === 'password') {
+    } else if (event.target.name === "password") {
       setPassword(event.target.value);
     }
-  }
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const data = await singup({ email: email, username: username, password: password, confirmPassword: confirmPassword });
+    const data = await singup({
+      email: email,
+      username: username,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
     if (data.status && data.status === 400) {
       if (data.message && !data.errors) {
         setErrors({ genral: data.message });
@@ -56,20 +64,29 @@ const Signup = ({ classes, ...rest }) => {
     } else {
       const remainSecond = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainSecond);
-      localStorage.setItem('expiryDate', expiryDate);
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('token', `Bearer ${data.token}`);
-      rest.history.push('/');
+      localStorage.setItem("expiryDate", expiryDate);
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("token", `Bearer ${data.token}`);
+      rest.history.push("/");
     }
     setLoading(false);
-  }
+  };
 
   return (
     <Grid container>
-      <Grid item sm={4}></Grid>
+      <Grid item sm={4}>
+        <Typography>Return Home</Typography>
+        <Link to="/">
+          <TooltipButton title="Return Home">
+            <HomeIcon color="secondary" />
+          </TooltipButton>
+        </Link>
+      </Grid>
       <Grid item sm={4} className={classes.center}>
         <img src={Logo} alt="logo" />
-        <Typography color="initial" variant="h3">Signup</Typography>
+        <Typography color="initial" variant="h3">
+          Signup
+        </Typography>
         <br />
         <form noValidate onSubmit={submitHandler}>
           <TextField
@@ -135,18 +152,37 @@ const Signup = ({ classes, ...rest }) => {
             onChange={changeHandler}
           />
           <br />
-          {errors.genral && <Typography variant="caption" color="error" >{errors.genral}</Typography>}
+          {errors.genral && (
+            <Typography variant="caption" color="error">
+              {errors.genral}
+            </Typography>
+          )}
           <br />
           <br />
-          <Button type="submit" color="primary" variant="contained" disabled={loading ? true : false}>
-            Signup{loading && <CircularProgress color="primary" style={{ marginLeft: 10 }} size={20} />}
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            disabled={loading ? true : false}
+          >
+            Signup
+            {loading && (
+              <CircularProgress
+                color="primary"
+                style={{ marginLeft: 10 }}
+                size={20}
+              />
+            )}
           </Button>
         </form>
+        <br />
+        <small>
+          Don't have account? Login <Link to="/login">here</Link>
+        </small>
       </Grid>
       <Grid item sm={4}></Grid>
     </Grid>
   );
-
-}
+};
 
 export default withStyles(style)(Signup);
