@@ -1,78 +1,78 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from "react";
 
 // MUI
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 // Icons
-import EditIcon from '@material-ui/icons/Edit';
-import CloseButton from '@material-ui/icons/Close';
+import EditIcon from "@material-ui/icons/Edit";
+import CloseButton from "@material-ui/icons/Close";
 
 // Components
-import TooltipButton from '../Button/TooltipButton';
+import TooltipButton from "../Button/TooltipButton";
 
-import { editUser, showUser } from '../../api';
+import { editUser, showUser } from "../../api";
 
 const style = {
   center: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 5,
-  }
-}
+  },
+};
 
 const EditUser = ({ classes, track }) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [website, setWebsite] = useState('');
-  const [location, setLocation] = useState('');
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [website, setWebsite] = useState("");
+  const [location, setLocation] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const userData = await showUser(localStorage.getItem('userId'));
-      if(userData.status) {
-        setErrors('Serve problem try again later');
+      const userData = await showUser(localStorage.getItem("userId"));
+      if (userData.status) {
+        setErrors("Serve problem try again later");
       }
       const { name, bio, website, location } = userData;
       setName(name);
       setBio(bio);
       setWebsite(website);
       setLocation(location);
-    }
+    };
     fetchData();
-  }, [])
+  }, [open]);
 
   const openHandler = () => {
     setOpen(true);
-  }
+  };
 
   const closeHandler = () => {
     setOpen(false);
-  }
+  };
 
   const changeHandler = (event) => {
-    if (event.target.name === 'name') {
+    if (event.target.name === "name") {
       setName(event.target.value);
-    } else if (event.target.name === 'location') {
+    } else if (event.target.name === "location") {
       setLocation(event.target.value);
-    } else if (event.target.name === 'website') {
+    } else if (event.target.name === "website") {
       setWebsite(event.target.value);
-    } else if (event.target.name === 'bio') {
+    } else if (event.target.name === "bio") {
       setBio(event.target.value);
     }
-  }
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -80,7 +80,7 @@ const EditUser = ({ classes, track }) => {
     await editUser(name, location, bio, website);
     setLoading(false);
     setOpen(false);
-  }
+  };
 
   return (
     <Fragment>
@@ -88,10 +88,16 @@ const EditUser = ({ classes, track }) => {
         <EditIcon />
       </TooltipButton>
       <Dialog onClose={closeHandler} fullWidth open={open} maxWidth="sm">
-        <TooltipButton onClick={closeHandler} title="Close" btnClass={classes.closeButton}>
+        <TooltipButton
+          onClick={closeHandler}
+          title="Close"
+          btnClass={classes.closeButton}
+        >
           <CloseButton color="primary" />
         </TooltipButton>
-        <DialogTitle className={classes.center}><Typography variant="h5">Edit Your Details</Typography></DialogTitle>
+        <DialogTitle className={classes.center}>
+          <Typography variant="h5">Edit Your Details</Typography>
+        </DialogTitle>
         <DialogContent className={classes.content}>
           <form noValidate onSubmit={submitHandler}>
             <TextField
@@ -157,18 +163,33 @@ const EditUser = ({ classes, track }) => {
               onChange={changeHandler}
             />
             <br />
-            {errors.genral && <Typography variant="caption" color="error" >{errors.genral}</Typography>}
+            {errors.genral && (
+              <Typography variant="caption" color="error">
+                {errors.genral}
+              </Typography>
+            )}
             <br />
             <br />
-            <Button type="submit" color="primary" variant="contained" disabled={loading ? true : false}>
-              submit{loading && <CircularProgress color="primary" style={{ marginLeft: 10 }} size={20} />}
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={loading ? true : false}
+            >
+              submit
+              {loading && (
+                <CircularProgress
+                  color="primary"
+                  style={{ marginLeft: 10 }}
+                  size={20}
+                />
+              )}
             </Button>
           </form>
         </DialogContent>
       </Dialog>
     </Fragment>
   );
-}
+};
 
 export default withStyles(style)(EditUser);
-
