@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const URL = "https://sonido.herokuapp.com/graphql";
 
@@ -12,18 +12,27 @@ export const login = async ({ email, password }) => {
               userId
             }
           }        
-        `
+        `,
     };
-    const { data: { data: { login } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    const {
+      data: {
+        data: { login },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return { ...login };
   } catch ({ response: { data } }) {
     if (data.errors.length > 0) {
       return data.errors[0];
     }
   }
-}
+};
 
-export const singup = async ({ username, email, password, confirmPassword }) => {
+export const singup = async ({
+  username,
+  email,
+  password,
+  confirmPassword,
+}) => {
   try {
     const graphqlQuery = {
       query: `
@@ -38,16 +47,20 @@ export const singup = async ({ username, email, password, confirmPassword }) => 
             userId
           }     
         }
-        `
+        `,
     };
-    const { data: { data: { signup } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    const {
+      data: {
+        data: { signup },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return { ...signup };
   } catch ({ response: { data } }) {
     if (data.errors.length > 0) {
       return data.errors[0];
     }
   }
-}
+};
 
 export const home = async () => {
   try {
@@ -106,27 +119,34 @@ export const home = async () => {
           }
         }  
       }
-    `
-    }
-    const { data: { data: home } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    `,
+    };
+    const {
+      data: { data: home },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return home;
   } catch ({ response }) {
-    console.log(response)
+    console.log(response);
   }
-}
+};
 
 export const getTracks = async (term) => {
   try {
-    const { data: { results } } = await axios.get(`https://itunes.apple.com/search?term=${term}&limit=1`, {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
+    const {
+      data: { results },
+    } = await axios.get(
+      `https://itunes.apple.com/search?term=${term}&limit=50`,
+      {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+        },
       }
-    });
+    );
     return results;
   } catch (error) {
-    console.log(error.response)
+    console.log(error.response);
   }
-}
+};
 
 export const searchUsers = async (term) => {
   try {
@@ -139,16 +159,26 @@ export const searchUsers = async (term) => {
           name
         }
       }
-      `
-    }
-    const { data: { data: { searchUser } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+      `,
+    };
+    const {
+      data: {
+        data: { searchUser },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return searchUser;
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
-export const dedicateSong = async (receiverId, previewUrl, artworkUrl100, trackName, artistName) => {
+export const dedicateSong = async (
+  receiverId,
+  previewUrl,
+  artworkUrl100,
+  trackName,
+  artistName
+) => {
   try {
     const graphqlQuery = {
       query: `
@@ -163,14 +193,14 @@ export const dedicateSong = async (receiverId, previewUrl, artworkUrl100, trackN
               _id
           }
         }  
-      `
+      `,
     };
     await axios.post(URL, JSON.stringify(graphqlQuery));
     return;
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
 export const editUser = async (name, location, bio, website) => {
   try {
@@ -187,14 +217,14 @@ export const editUser = async (name, location, bio, website) => {
             username
           }
         }  
-      `
+      `,
     };
     await axios.post(URL, JSON.stringify(graphqlQuery));
     return;
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
 export const showUser = async (_id) => {
   try {
@@ -215,15 +245,19 @@ export const showUser = async (_id) => {
           follow
           }
         }      
-      `
+      `,
     };
-    const { data: { data: { showUser } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+    const {
+      data: {
+        data: { showUser },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return showUser;
   } catch ({ response }) {
     console.log(response);
-    return { ...response.data.errors[0] }
+    return { ...response.data.errors[0] };
   }
-}
+};
 
 export const follow = async (_id) => {
   try {
@@ -232,14 +266,13 @@ export const follow = async (_id) => {
         mutation {
           follow(followunfollowData:{_id: "${_id}"})
         }        
-      `
-    }
+      `,
+    };
     await axios.post(URL, JSON.stringify(graphqlQuery));
-
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
 export const unfollow = async (_id) => {
   try {
@@ -248,14 +281,13 @@ export const unfollow = async (_id) => {
         mutation {
           unfollow(followunfollowData:{_id: "${_id}"})
         }        
-      `
-    }
+      `,
+    };
     await axios.post(URL, JSON.stringify(graphqlQuery));
-
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
 export const follower = async () => {
   try {
@@ -272,14 +304,18 @@ export const follower = async () => {
             }
           }
         }              
-      `
-    }
-    const { data: { data: { followers } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+      `,
+    };
+    const {
+      data: {
+        data: { followers },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return followers;
   } catch (error) {
     console.log(error.response);
   }
-}
+};
 
 export const following = async () => {
   try {
@@ -296,11 +332,15 @@ export const following = async () => {
             }
           }
         }
-      `
-    }
-    const { data: { data: { following } } } = await axios.post(URL, JSON.stringify(graphqlQuery));
+      `,
+    };
+    const {
+      data: {
+        data: { following },
+      },
+    } = await axios.post(URL, JSON.stringify(graphqlQuery));
     return following;
   } catch (error) {
     console.log(error.response);
   }
-}
+};
